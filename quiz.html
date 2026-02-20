@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Cognovoid | Mind Scan</title>
-  <link rel="stylesheet" href="quiz.css" />
+  <meta charset="UTF-8">
+  <title>Level 2 - Mental State Quiz</title>
+  <link rel="stylesheet" href="quiz.css">
 </head>
 <body>
 
-  <div class="container">
-    <h1 class="title">🧠 COGNOVOID</h1>
-    <p class="subtitle">Mind Stability Scan</p>
+<div class="quiz-container">
+  <h2 id="question">Question will appear here</h2>
 
-    <div class="progress">
-      <div id="progress-bar"></div>
-    </div>
-
-    <div class="quiz-card">
-      <h2 id="question">Question text</h2>
-      <div id="options" class="options"></div>
-    </div>
-
-    <button id="nextBtn" disabled>Next ➜</button>
+  <div class="options">
+    <button onclick="selectAnswer(1)">1</button>
+    <button onclick="selectAnswer(2)">2</button>
+    <button onclick="selectAnswer(3)">3</button>
+    <button onclick="selectAnswer(4)">4</button>
+    <button onclick="selectAnswer(5)">5</button>
   </div>
 
-  <script src="quiz.js"></script>
+  <p id="progress">Question 1</p>
+</div>
+
+<script src="quiz.js"></script>
 </body>
 </html>

@@ -1,71 +1,72 @@
-const quizData = [
-  {
-    question: "How many hours did you sleep last night?",
-    options: ["< 4 hours", "4-6 hours", "6-8 hours", "8+ hours"]
-  },
-  {
-    question: "How many hours is your screen time today?",
-    options: ["< 2 hrs", "2-4 hrs", "4-6 hrs", "6+ hrs"]
-  },
-  {
-    question: "How do you feel mentally right now?",
-    options: ["Sharp 😎", "Okay 🙂", "Tired 😴", "Overwhelmed 😵"]
-  },
-  {
-    question: "When do you feel most distracted?",
-    options: ["Morning", "Afternoon", "Night", "Always"]
-  }
+let questions = [
+  { key: "sleep", text: "How many hours did you sleep last night?" },
+  { key: "stress", text: "How stressed do you feel right now?" },
+  { key: "mood", text: "How would you rate your mood today?" },
+  { key: "focus", text: "How focused do you feel currently?" },
+  { key: "screen", text: "How long was your screen time today?" }
 ];
 
-let currentQuestion = 0;
-let answers = [];
-
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const nextBtn = document.getElementById("nextBtn");
-const progressBar = document.getElementById("progress-bar");
-
-loadQuestion();
-
-function loadQuestion() {
-  nextBtn.disabled = true;
-  optionsEl.innerHTML = "";
-
-  const q = quizData[currentQuestion];
-  questionEl.innerText = q.question;
-
-  q.options.forEach(option => {
-    const btn = document.createElement("button");
-    btn.innerText = option;
-    btn.onclick = () => selectAnswer(btn, option);
-    optionsEl.appendChild(btn);
-  });
-
-  updateProgress();
-}
-
-function selectAnswer(button, answer) {
-  document.querySelectorAll(".options button").forEach(btn => {
-    btn.classList.remove("selected");
-  });
-
-  button.classList.add("selected");
-  answers[currentQuestion] = answer;
-  nextBtn.disabled = false;
-}
-
-nextBtn.onclick = () => {
-  currentQuestion++;
-
-  if (currentQuestion < quizData.length) {
-    loadQuestion();
-  } else {
-    localStorage.setItem("cognovoidAnswers", JSON.stringify(answers));
-    window.location.href = "result.html";
-  }
+let extraQuestions = {
+  stress: { key: "anxiety", text: "Do you feel emotionally overwhelmed?" },
+  sleep: { key: "fatigue", text: "Do you feel brain fog or tiredness?" }
 };
 
-function updateProgress() {
-  const percent = ((currentQuestion + 1) / quizData.length) * 100;
-  progressBar.style.width = percent + "%";
+let currentQuestionIndex = 0;
+let userData = {};
+
+const questionEl = document.getElementById("question");
+const progressEl = document.getElementById("progress");
+
+function showQuestion() {
+  questionEl.innerText = questions[currentQuestionIndex].text;
+  progressEl.innerText = `Question ${currentQuestionIndex + 1}`;
+}
+
+showQuestion();
+
+function selectAnswer(value) {
+  let currentKey = questions[currentQuestionIndex].key;
+  userData[currentKey] = value;
+
+  // Adaptive Logic
+  if (currentKey === "stress" && value >= 4) {
+    questions.splice(currentQuestionIndex + 1, 0, extraQuestions.stress);
+  }
+
+  if (currentKey === "sleep" && value <= 2) {
+    questions.splice(currentQuestionIndex + 1, 0, extraQuestions.sleep);
+  }
+
+  currentQuestionIndex++;
+
+  if (currentQuestionIndex < questions.length) {
+    showQuestion();
+  } else {
+    finishQuiz();
+  }
+}
+
+function finishQuiz() {
+  console.log("User Data:", userData);
+
+  // Temporary result display
+  document.querySelector(".quiz-container").innerHTML = `
+    <h2>Quiz Completed ✅</h2>
+    <p>Your mental data has been recorded.</p>
+    <button onclick="sendToBackend()">Analyze</button>
+  `;
+}
+
+function sendToBackend() {
+  fetch("http://localhost:5000/predict", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(userData)
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert("Prediction: " + data.state);
+  });
 }
