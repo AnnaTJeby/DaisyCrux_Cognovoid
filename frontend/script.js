@@ -1,4 +1,23 @@
+const API_BASE = "https://daisycrux-cognovoid.onrender.com";
 
+fetch(`${API_BASE}/predict`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(data)
+})
+.then(res => res.json())
+.then(data => {
+  console.log("Prediction:", data);
+});
+fetch(`${API_BASE}/chat`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ message: userMessage })
+});
 function sendMessage() {
 
     const mood = document.getElementById("mood").value;
