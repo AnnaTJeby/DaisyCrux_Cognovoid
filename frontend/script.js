@@ -1,64 +1,77 @@
 const API_BASE = "https://daisycrux-cognovoid.onrender.com";
 
-fetch(`${API_BASE}/predict`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify(data)
-})
-.then(res => res.json())
-.then(data => {
-  console.log("Prediction:", data);
-});
-fetch(`${API_BASE}/chat`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({ message: userMessage })
-});
+// =====================
+// CHAT FUNCTION
+// =====================
 function sendMessage() {
 
-    const mood = document.getElementById("mood").value;
-    const scenario = document.getElementById("scenario").value;
-    const chatBox = document.getElementById("chatBox");
+  const mood = document.getElementById("mood").value;
+  const scenario = document.getElementById("scenario").value;
+  const chatBox = document.getElementById("chatBox");
 
-    if (!mood || !scenario) {
-        alert("Please select mood and describe your situation.");
-        return;
-    }
+  if (!mood || !scenario) {
+    alert("Please select mood and describe your situation.");
+    return;
+  }
 
-    // Show user message
-    const userMsg = document.createElement("div");
-    userMsg.className = "message user";
-    userMsg.innerText = "Mood: " + mood + "\n" + scenario;
-    chatBox.appendChild(userMsg);
+  // Show user message
+  const userMsg = document.createElement("div");
+  userMsg.className = "message user";
+  userMsg.innerText = "Mood: " + mood + "\n" + scenario;
+  chatBox.appendChild(userMsg);
 
-    // Show loading message
-    const botMsg = document.createElement("div");
-    botMsg.className = "message bot";
-    botMsg.innerText = "Thinking clearly...";
-    chatBox.appendChild(botMsg);
+  // Bot loading message
+  const botMsg = document.createElement("div");
+  botMsg.className = "message bot";
+  botMsg.innerText = "Thinking clearly...";
+  chatBox.appendChild(botMsg);
 
-    fetch("http://localhost:3000/chat", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            mood: mood,
-            scenario: scenario
-        })
+  fetch(API_BASE + "/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      action: "chat",
+      message: scenario
     })
-    .then(res => res.json())
-    .then(data => {
-        botMsg.innerText = data.reply;
+  })
+  .then(res => res.json())
+  .then(data => {
+    botMsg.innerText = data.reply || "No reply from server.";
+  })
+  .catch(error => {
+    botMsg.innerText = "Server error. Check backend.";
+    console.error(error);
+  });
+}
+
+
+// =====================
+// PREDICT FUNCTION
+// =====================
+function sendPrediction(data) {
+  fetch(API_BASE + "/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      action: "predict",
+      ...data
     })
-    .catch(error => {
-        botMsg.innerText = "Server error. Check backend.";
-        console.error(error);
-    });
+  })
+  .then(res => res.json())
+  .then(result => {
+    console.log("Prediction:", result);
+  })
+  .catch(err => console.error(err));
+}
+
+
+// =====================
+// QUIZ NAVIGATION
+// =====================
 function startQuiz() {
-    window.location.href = "quiz.html";
-}};
+  window.location.href = "quiz.html";
+}
