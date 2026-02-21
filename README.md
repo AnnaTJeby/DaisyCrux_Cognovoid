@@ -13,8 +13,7 @@
 - Member 2:  Athira V - Muthoot Institute of Technology and Science,Varikoli
 
 ### Hosted Project Link
-[mention your project hosted link here]
-
+(https://daisy-crux-cognovoid.vercel.app/)
 ### Project Description
 Cognovoid predicts a continuous stress score (0–10) from daily behavior inputs, calculates a cognitive risk score, and visualizes mental stability using interactive charts. The platform includes a friendly chatbot that guides users through the quiz and provides personalized recommendations to reduce stress and improve decision-making.
 ### The Problem statement
@@ -40,12 +39,7 @@ Offers personalized guidance to help users manage stress and avoid decision fati
 - Libraries used: XGBoost, pandas, numpy, matplotlib, Chart.js
 - Tools used: VS Code, Jupyter Notebook, Git, Live Server
 
-**For Hardware:**
-- Main components: [List main components]
-- Specifications: [Technical specifications]
-- Tools required: [List tools needed]
 
----
 
 ## Features
 
@@ -85,15 +79,7 @@ Open Frontend Pages (via live server/static server)
 [Run commands - e.g., npm start, python app.py]
 ```
 
-### For Hardware:
 
-#### Components Required
-[List all components needed with specifications]
-
-#### Circuit Setup
-[Explain how to set up the circuit]
-
----
 
 ## Project Documentation
 
@@ -132,35 +118,12 @@ Flow
 User → Frontend → Backend → ML Model & Database → Backend → Frontend
 **Application Workflow:**
 
-![Workflow](docs/workflow.png)
+<img width="1536" height="1024" alt="Application flow" src="https://github.com/user-attachments/assets/daa852ad-29b9-4d01-abca-ae7481affc4d" />
+
 User → Frontend → Backend → ML Model & Database → Backend → Frontend
 
 ---
 
-### For Hardware:
-
-#### Schematic & Circuit
-
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
-
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
-
-#### Build Photos
-
-![Team](Add photo of your team here)
-
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
-
----
 
 ## Additional Documentation
 
