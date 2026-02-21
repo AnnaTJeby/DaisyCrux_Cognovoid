@@ -1,6 +1,5 @@
-<p align="center">
-  <img src="./img.png" alt="Project Banner" width="100%">
-</p>
+<img width="1280" height="640" alt="img" src="https://github.com/user-attachments/assets/7820eb13-2448-44fd-8d85-538363bfacc4" />
+
 
 # Cognovoid 🎯
 
